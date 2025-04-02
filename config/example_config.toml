@@ -1,0 +1,6 @@
+[user]
+od_session = "..."
+
+
+[server]
+base_url = "https://samsmart.hosts.openinc.de/api/data"

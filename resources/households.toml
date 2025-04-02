@@ -1,0 +1,260 @@
+[available_sensors]
+"Aeotec.Humidity" = "cardinal"
+"Aeotec.luminescence" = "cardinal"
+"Aeotec.PIR" = "nominal"
+"Aeotec.temperature" = "cardinal"
+"Aeotec.Ultraviolet" = "cardinal"
+anyMotionfan = "nominal"
+"BSEC.CO2" = "cardinal"
+"BSEC.feuchte" = "cardinal"
+"BSEC.temperatur" = "cardinal"
+"BSEC.VOC" = "cardinal"
+CO2 = "cardinal"
+druck = "cardinal"
+feuchte = "cardinal"
+Gas = "cardinal"
+light = "nominal"
+MQ135 = "cardinal"
+MQ7 = "cardinal"
+pIR = "nominal"
+sound = "nominal"
+temperatur = "cardinal"
+VOC = "cardinal"
+
+[households.haushalt01]
+[[households.haushalt01.timeframes]]
+tag = "ssh10"
+source = "koffer1"
+oldest_record = 2024-09-12T00:00:00
+newest_record = 2024-09-16T09:40:59
+
+[[households.haushalt01.timeframes]]
+tag = "ssh1"
+source = "koffer1"
+oldest_record = 2024-09-16T09:41:00
+newest_record = 2024-09-25T23:59:59
+
+[households.haushalt03]
+[[households.haushalt03.timeframes]]
+tag = "ssh3"
+source = "koffer2"
+oldest_record = 2024-10-31T00:00:00
+newest_record = 2024-11-12T23:59:59
+
+[[households.haushalt03.timeframes]]
+tag = "ssh8"
+source = "koffer1"
+oldest_record = 2024-12-15T00:00:00
+newest_record = 2024-12-16T08:18:59
+
+[[households.haushalt03.timeframes]]
+tag = "ssh3"
+source = "koffer1"
+oldest_record = 2024-12-16T08:19:00
+newest_record = 2025-01-14T23:59:59
+
+[households.haushalt04]
+[[households.haushalt04.timeframes]]
+tag = "ssh6"
+source = "koffer2"
+oldest_record = 2024-09-25T00:00:00
+newest_record = 2024-09-25T15:59:00
+
+[[households.haushalt04.timeframes]]
+tag = "ssh4"
+source = "koffer2"
+oldest_record = 2024-09-25T16:00:00
+newest_record = 2024-10-11T16:00:00
+
+[households.haushalt05]
+[[households.haushalt05.timeframes]]
+tag = "ssh1"
+source = "koffer1"
+oldest_record = 2024-10-28T00:00:00
+newest_record = 2024-10-31T14:36:59
+
+[[households.haushalt05.timeframes]]
+tag = "ssh5"
+source = "koffer1"
+oldest_record = 2024-10-31T14:37:00
+newest_record = 2024-11-12T23:59:59
+
+[households.haushalt06]
+[[households.haushalt06.timeframes]]
+tag = "ssh13"
+source = "koffer2"
+oldest_record = 2024-09-10T15:00:00
+newest_record = 2024-09-11T08:50:59
+
+[[households.haushalt06.timeframes]]
+tag = "ssh6"
+source = "koffer2"
+oldest_record = 2024-09-11T08:51:00
+newest_record = 2024-09-24T23:59:59
+
+[[households.haushalt06.timeframes]]
+tag = "ssh13"
+source = "koffer2"
+oldest_record = 2024-03-12T16:16:00
+newest_record = 2024-03-14T13:21:59
+
+[[households.haushalt06.timeframes]]
+tag = "ssh6"
+source = "koffer2"
+oldest_record = 2024-03-14T13:22:00
+#newest_record =
+
+
+[households.haushalt08]
+[[households.haushalt08.timeframes]]
+tag = "ssh8"
+source = "koffer1"
+oldest_record = 2024-11-13T00:00:00
+newest_record = 2024-12-04T23:59:59
+
+[households.haushalt10]
+[[households.haushalt10.timeframes]]
+tag = "ssh16"
+source = "koffer1"
+oldest_record = 2024-08-28T15:00:00
+newest_record = 2024-08-29T16:34:59
+
+[[households.haushalt10.timeframes]]
+tag = "ssh10"
+source = "koffer1"
+oldest_record = 2024-08-29T16:35:00
+newest_record = 2024-09-11T23:59:59
+
+[[households.haushalt10.timeframes]]
+tag = "haushalt21"
+source = "koffer2"
+oldest_record = 2024-12-18T00:00:00
+newest_record = 2025-01-06T01:47:59
+
+[[households.haushalt10.timeframes]]
+tag = "ssh10"
+source = "koffer2"
+oldest_record = 2025-01-06T01:48:00
+newest_record = 2025-01-14T23:59:59
+
+[households.haushalt11]
+[[households.haushalt11.timeframes]]
+tag = "ssh11"
+source = "koffer1"
+oldest_record = 2024-07-31T00:00:00
+newest_record = 2024-08-13T14:59:59
+
+[[households.haushalt11.timeframes]]
+tag = "ssh13"
+source = "koffer1"
+oldest_record = 2025-03-12T16:22:00
+newest_record = 2025-03-18T13:26:59
+
+[[households.haushalt11.timeframes]]
+tag = "ssh11"
+source = "koffer1"
+oldest_record = 2025-03-18T13:27:00
+#newest_record =
+
+[households.haushalt13]
+[[households.haushalt13.timeframes]]
+tag = "ssh14"
+source = "koffer2"
+oldest_record = 2024-08-29T00:00:00
+newest_record = 2024-08-30T08:31:59
+
+[[households.haushalt13.timeframes]]
+tag = "ssh13"
+source = "koffer2"
+oldest_record = 2024-08-30T08:32:00
+newest_record = 2024-09-10T10:00:00
+
+[[households.haushalt13.timeframes]]
+tag = "ssh3"
+source = "koffer1"
+oldest_record = 2025-01-15T00:00:00
+newest_record = 2025-01-17T08:41:59
+
+[[households.haushalt13.timeframes]]
+tag = "ssh13"
+source = "koffer1"
+oldest_record = 2025-01-17T08:42:00
+newest_record = 2025-03-12T16:21:59
+
+[households.haushalt14]
+[[households.haushalt14.timeframes]]
+tag = "ssh14"
+source = "koffer2"
+oldest_record = 2024-08-13T15:00:00
+newest_record = 2024-08-28T23:59:59
+
+[[households.haushalt14.timeframes]]
+tag = "ssh14"
+source = "koffer2"
+oldest_record = 2025-01-15T00:00:00
+newest_record = 2025-03-12T16:15:59
+
+[households.haushalt16]
+[[households.haushalt16.timeframes]]
+tag = "ssh11"
+source = "koffer1"
+oldest_record = 2024-08-13T15:00:00
+newest_record = 2024-08-14T08:53:59
+
+[[households.haushalt16.timeframes]]
+tag = "ssh16"
+source = "koffer1"
+oldest_record = 2024-08-14T08:54:00
+newest_record = 2024-08-28T14:59:59
+
+[households.haushalt19]
+[[households.haushalt19.timeframes]]
+tag = "ssh19"
+source = "koffer2"
+oldest_record = 2024-07-16T00:00:00
+newest_record = 2024-07-29T23:59:59
+
+[households.haushalt21]
+[[households.haushalt21.timeframes]]
+tag = "haushalt21"
+source = "koffer1"
+oldest_record = 2024-07-16T00:00:00
+newest_record = 2024-07-28T23:59:59
+
+[[households.haushalt21.timeframes]]
+tag = "haushalt3"
+source = "koffer2"
+oldest_record = 2024-11-25T00:00:00
+newest_record = 2024-11-27T11:59:59
+
+[[households.haushalt21.timeframes]]
+tag = "haushalt21"
+source = "koffer2"
+oldest_record = 2024-11-27T12:00:00
+newest_record = 2024-12-15T23:59:59
+
+[households.haushalt22]
+[[households.haushalt22.timeframes]]
+tag = "ssh19"
+source = "koffer2"
+oldest_record = 2024-08-07T00:00:00
+newest_record = 2024-08-08T16:59:59
+
+[[households.haushalt22.timeframes]]
+tag = "ssh22"
+source = "koffer2"
+oldest_record = 2024-08-08T17:00:00
+newest_record = 2024-08-13T14:59:59
+
+[households.haushalt23]
+[[households.haushalt23.timeframes]]
+tag = "ssh4"
+source = "koffer2"
+oldest_record = 2024-10-21T00:00:00
+newest_record = 2024-10-23T09:42:59
+
+[[households.haushalt23.timeframes]]
+tag = "ssh23"
+source = "koffer2"
+oldest_record = 2024-10-23T09:43:00
+newest_record = 2024-10-30T23:59:59
