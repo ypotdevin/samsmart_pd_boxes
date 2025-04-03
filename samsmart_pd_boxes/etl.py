@@ -13,6 +13,21 @@ from pydantic import BaseModel
 from config import config
 from resources import AVAILABLE_SENSORS, Household, Koffer, Timeframe
 
+__all__ = [
+    "all_current",
+    "all_household_records",
+    "all_timeframe_records",
+    "check_households",
+    "downsample",
+    "historical",
+    "index_by_timestamp",
+    "merge",
+    "n_latest",
+    "outer_join_by_timestamp",
+    "past_timedelta",
+    "timeframes_by_source",
+]
+
 _logger = logging.getLogger(__name__)
 
 _BASE_URL = config["server"]["base_url"]
@@ -362,6 +377,20 @@ def n_latest(
 def all_household_records(
     household: Household, session: requests.Session | None = None
 ) -> pd.DataFrame:
+    """_summary_
+
+    Parameters
+    ----------
+    household : Household
+        _description_
+    session : requests.Session | None, optional
+        _description_, by default None
+
+    Returns
+    -------
+    pd.DataFrame
+        _description_
+    """
     timeframe_dfs = [
         all_timeframe_records(timeframe, session) for timeframe in household.timeframes
     ]
@@ -391,7 +420,9 @@ def all_timeframe_records(
 
     Notes
     -----
-    Colliding timestamps are handled by the default behavior of `merge`.
+    Colliding timestamps are handled by the default behavior of `merge`. Also,
+    the timestamps are not pooled/downsampled yet – so expect a lot of NaN
+    values. Use `downsample` for further processing.
     """
     if session is None:
         session = requests.Session()
@@ -448,7 +479,7 @@ def index_by_timestamp(df: pd.DataFrame, aggregation_function) -> pd.DataFrame:
         indexed_df = no_dup_df.set_index("timestamp", verify_integrity=True)
         if len(df) != len(indexed_df):
             _logger.info(
-                "De-duplication was actually necessary. " "Found %d duplicates.",
+                "De-duplication was actually necessary. Found %d duplicates.",
                 len(df) - len(indexed_df),
             )
         return indexed_df

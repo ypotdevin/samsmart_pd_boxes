@@ -1,6 +1,8 @@
 import pandas as pd
 import plotly.express as px
 
+__all__ = ["data_availability", "line_plot", "scatter_plot"]
+
 
 def scatter_plot(df: pd.DataFrame):
     plotable_df = df.reset_index()
