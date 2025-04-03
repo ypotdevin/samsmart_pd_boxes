@@ -59,13 +59,41 @@ Additional to the book keeping of which box is where at what time,
 (their identifiers) and the kind of their signal (nominal/boolean or
 cardinal/float).
 
-Both sections may be conveniently accessed through the constants
-`AVAILABLE_SENSORS` and `HOUSEHOLDS` (defined in `resources/__init__.py` but
-available at top level module import).
+Both sections (household information and sensor information) may be conveniently
+accessed through the constants `AVAILABLE_SENSORS` and `HOUSEHOLDS` (defined in
+`resources/__init__.py`, but available at top level module import).
 
 ### Loading Data
 
-Use
+If you look at the [open.INC Data Web
+API](https://github.com/open-inc/openware/wiki/Data-Web-API), you will notice
+there are broad »items«, »live« and »historical« sections. You may use the
+[`all_current`](https://samsmart-presence-detection-boxes.readthedocs.io/en/latest/apidocs/samsmart_pd_boxes/samsmart_pd_boxes.etl.html#samsmart_pd_boxes.etl.all_current),
+[`n_latest`](https://samsmart-presence-detection-boxes.readthedocs.io/en/latest/apidocs/samsmart_pd_boxes/samsmart_pd_boxes.etl.html#samsmart_pd_boxes.etl.n_latest),
+or
+[`historical`](https://samsmart-presence-detection-boxes.readthedocs.io/en/latest/apidocs/samsmart_pd_boxes/samsmart_pd_boxes.etl.html#samsmart_pd_boxes.etl.historical)
+function to directly use the API mentioned there. Or even a convenience function
+build directly on top of the historical API:
+[`past_timedelta`](https://samsmart-presence-detection-boxes.readthedocs.io/en/latest/apidocs/samsmart_pd_boxes/samsmart_pd_boxes.etl.html#samsmart_pd_boxes.etl.past_timedelta).
+However, we think that you will be most interested in the two functions
+[`all_household_records`](https://samsmart-presence-detection-boxes.readthedocs.io/en/latest/apidocs/samsmart_pd_boxes/samsmart_pd_boxes.etl.html#samsmart_pd_boxes.etl.all_household_records)
+and
+[`all_timeframe_records`](https://samsmart-presence-detection-boxes.readthedocs.io/en/latest/apidocs/samsmart_pd_boxes/samsmart_pd_boxes.etl.html#samsmart_pd_boxes.etl.all_timeframe_records),
+which collect all available sensor data belonging to a particular timeframe or
+household and wrap it neatly in a `pd.DataFrame`.
+
+When using one of the above mentioned functions that return a DataFrame, notice
+that those data frames are indexed by a very precise (milliseconds) timestamp.
+Usually, two sensor values to not share the very same timestamp, which basically
+leads to data frames where each row (i.e. each timestamp) has only one valid
+sensor value, while every other sensor values is `NaN`. To increase the number
+of valid observations per row, we suggest to bin/downsample the timestamps to a
+less precise time period, like e.g. 5 minutes, such that all valid sensor values
+occurring within that time period are bundled. As this will also decrease the
+total number of rows, you have to find a suitable sweet spot which fits your
+purpose. Try different values, using the
+[`downsample`](https://samsmart-presence-detection-boxes.readthedocs.io/en/latest/apidocs/samsmart_pd_boxes/samsmart_pd_boxes.etl.html#samsmart_pd_boxes.etl.downsample)
+function.
 
 ### Feature Engineering
 

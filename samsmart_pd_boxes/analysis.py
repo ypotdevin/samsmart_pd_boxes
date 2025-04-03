@@ -180,7 +180,7 @@ def expected_relative_humidity(
 
 
 def smoothed_average(halflife: float, df: pd.DataFrame) -> pd.DataFrame:
-    """Smooth (cardinal) sequential data of a DataFrame, by using `pd.ewm`
+    """Smooth (cardinal) sequential data of a DataFrame, by using `pd.ewm`.
 
     Parameters
     ----------

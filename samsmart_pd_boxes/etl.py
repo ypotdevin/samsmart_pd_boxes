@@ -377,19 +377,30 @@ def n_latest(
 def all_household_records(
     household: Household, session: requests.Session | None = None
 ) -> pd.DataFrame:
-    """_summary_
+    """Obtain all sensor records belonging to a household.
 
     Parameters
     ----------
     household : Household
-        _description_
+        The household to obtain captured sensor values from, covering all its
+        timeframes.
     session : requests.Session | None, optional
-        _description_, by default None
+        The session object to use, in case you want to pool the multiple
+        connection while calling this function multiple times. By default
+        `None`, which means that an intermediate session object is used to pool
+        at least the multiple connection this function opens itself.
 
     Returns
     -------
     pd.DataFrame
-        _description_
+        A DataFrame holding all the available sensor values of the given
+        household, indexed by timestamps.
+
+    Notes
+    -----
+    Colliding timestamps are handled by the default behavior of `merge`. Also,
+    the timestamps are not binned/downsampled yet – so expect a lot of NaN
+    values. Use `downsample` for further processing.
     """
     timeframe_dfs = [
         all_timeframe_records(timeframe, session) for timeframe in household.timeframes
@@ -421,7 +432,7 @@ def all_timeframe_records(
     Notes
     -----
     Colliding timestamps are handled by the default behavior of `merge`. Also,
-    the timestamps are not pooled/downsampled yet – so expect a lot of NaN
+    the timestamps are not binned/downsampled yet – so expect a lot of NaN
     values. Use `downsample` for further processing.
     """
     if session is None:
@@ -614,6 +625,18 @@ def _round_timestamps(timestamps, timedelta):
 def timeframes_by_source(
     households: dict[str, Household],
 ) -> dict[Koffer, list[Timeframe]]:
+    """Group timeframes by their source (i.e. the box their belong to).
+
+    Parameters
+    ----------
+    households : dict[str, Household]
+        The households dictionary, grouped by household.
+
+    Returns
+    -------
+    dict[Koffer, list[Timeframe]]
+        Timeframes by source.
+    """
     tbs = dict(
         koffer1=[],
         koffer2=[],
@@ -627,6 +650,23 @@ def timeframes_by_source(
 
 
 def check_households(households: dict[str, Household]) -> None:
+    """Check whether there are overlapping timeframes in the household data for
+    a given source.
+
+    If there would be overlapping timeframes for the same source, that would
+    mean the very same box would be at two different places at the same time.
+
+    Parameters
+    ----------
+    households : dict[str, Household]
+        The household data.
+
+    Raises
+    ------
+    ValueError
+        If and only if there are timeframes that have a non-empty intersection
+        (which should not happen).
+    """
     tbs = timeframes_by_source(households)
 
     # sort each group by newest_record
