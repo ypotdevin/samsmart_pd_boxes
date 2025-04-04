@@ -95,13 +95,13 @@ newest_record = 2024-09-24T23:59:59
 [[households.haushalt06.timeframes]]
 tag = "ssh13"
 source = "koffer2"
-oldest_record = 2024-03-12T16:16:00
-newest_record = 2024-03-14T13:21:59
+oldest_record = 2025-03-12T16:16:00
+newest_record = 2025-03-14T13:21:59
 
 [[households.haushalt06.timeframes]]
 tag = "ssh6"
 source = "koffer2"
-oldest_record = 2024-03-14T13:22:00
+oldest_record = 2025-03-14T13:22:00
 #newest_record =
 
 
