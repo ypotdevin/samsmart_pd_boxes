@@ -23,6 +23,7 @@ __all__ = [
     "index_by_timestamp",
     "merge",
     "n_latest",
+    "not_nan_any",
     "outer_join_by_timestamp",
     "past_timedelta",
     "timeframes_by_source",
@@ -398,9 +399,12 @@ def all_household_records(
 
     Notes
     -----
-    Colliding timestamps are handled by the default behavior of `merge`. Also,
-    the timestamps are not binned/downsampled yet – so expect a lot of NaN
-    values. Use `downsample` for further processing.
+    - Colliding timestamps are handled by the default behavior of `merge`.
+    - The timestamps are not binned/downsampled yet – so expect a lot of NaN
+      values. Use `downsample` for further processing.
+    - It might be the case that for some households, both boxes have been there
+      (at different times). If you would like to keep the data from the two
+      boxes separate, don't use this function as it does not differentiate them.
     """
     timeframe_dfs = [
         all_timeframe_records(timeframe, session) for timeframe in household.timeframes
@@ -620,6 +624,25 @@ def _round_timestamps(timestamps, timedelta):
     timedelta = to_offset(timedelta)
     td = pd.Timedelta(timedelta)  # type: ignore
     return pd.Timestamp((timestamps.value // td.value) * td.value)
+
+
+def not_nan_any(series: pd.Series) -> bool:
+    """Indicate whether the given series contains any actual `True` values.
+
+    `NaN` values are ignored. If a series contains only `NaN` values, return
+    `False`.
+
+    Parameters
+    ----------
+    series : pd.Series
+        The boolean series to assess.
+
+    Returns
+    -------
+    bool
+        `True` iff `series` contains any `True` value. `False` otherwise.
+    """
+    return series.dropna().any()
 
 
 def timeframes_by_source(
