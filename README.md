@@ -102,3 +102,48 @@ TODO
 ### Plotting
 
 TODO
+
+### Example: Download And Pre-Process All Available Data
+
+```python
+import logging
+
+import pandas as pd
+import requests
+
+# remember to add a config/config.toml before importing this module
+import samsmart_pd_boxes as samsmart
+
+logging.basicConfig(
+    format="{asctime} - {levelname} - {name}.{funcName}: {message}",
+    style="{",
+    datefmt="%Y-%m-%d %H:%M:%S",
+    level=logging.DEBUG,
+    force=True,
+)
+
+samsmart.check_households(samsmart.HOUSEHOLDS)
+
+# Create a session object to reduce load (reuse open http connection).
+session = requests.Session()
+tfbs = samsmart.timeframes_by_source(samsmart.HOUSEHOLDS)
+
+dfs = []
+for tf in tfbs["koffer1"]:  # it may also be "koffer2"
+    dfs.append(samsmart.all_timeframe_records(tf, session))
+
+koffer1_records = pd.concat(dfs)
+
+(nominals, cardinals) = samsmart.nominals_cardinals(koffer1_records)
+
+nominals = samsmart.downsample(
+    nominals, timedelta="5min", aggregation_function=samsmart.not_nan_any
+)
+cardinals = samsmart.downsample(
+    cardinals, timedelta="5min", aggregation_function="mean"
+)
+
+fig = samsmart.scatter_plot(samsmart.normalize(cardinals))
+
+fig.show()
+```
