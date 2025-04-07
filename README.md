@@ -82,26 +82,28 @@ and
 which collect all available sensor data belonging to a particular timeframe or
 household and wrap it neatly in a `pd.DataFrame`.
 
-When using one of the above mentioned functions that return a DataFrame, notice
-that those data frames are indexed by a very precise (milliseconds) timestamp.
-Usually, two sensor values to not share the very same timestamp, which basically
-leads to data frames where each row (i.e. each timestamp) has only one valid
-sensor value, while every other sensor values is `NaN`. To increase the number
-of valid observations per row, we suggest to bin/downsample the timestamps to a
-less precise time period, like e.g. 5 minutes, such that all valid sensor values
-occurring within that time period are bundled. As this will also decrease the
-total number of rows, you have to find a suitable sweet spot which fits your
-purpose. Try different values, using the
+When using one of the above mentioned functions that return a `DataFrame`,
+notice that those data frames are indexed by a very precise (milliseconds)
+timestamp. Usually, two sensor values to not share the very same timestamp,
+which basically leads to data frames where each row (i.e. each timestamp) has
+only one valid sensor value, while every other sensor values is `NaN`. To
+increase the number of valid observations per row, we suggest to bin/downsample
+the timestamps to a less precise time period, like e.g. 5 minutes, such that all
+valid sensor values occurring within that time period are bundled. As this will
+also decrease the total number of rows, you have to find a suitable sweet spot
+which fits your purpose. Try different values, using the
 [`downsample`](https://samsmart-presence-detection-boxes.readthedocs.io/en/latest/apidocs/samsmart_pd_boxes/samsmart_pd_boxes.etl.html#samsmart_pd_boxes.etl.downsample)
 function.
 
 ### Feature Engineering
 
-TODO
+For some initial feature engineering functions, see [this
+page](https://samsmart-presence-detection-boxes.readthedocs.io/en/latest/apidocs/samsmart_pd_boxes/samsmart_pd_boxes.analysis.html).
 
 ### Plotting
 
-TODO
+For basic plotting, see [this
+page](https://samsmart-presence-detection-boxes.readthedocs.io/en/latest/apidocs/samsmart_pd_boxes/samsmart_pd_boxes.plotting.html).
 
 ### Example: Download And Pre-Process All Available Data
 
@@ -114,6 +116,7 @@ import requests
 # remember to add a config/config.toml before importing this module
 import samsmart_pd_boxes as samsmart
 
+# setup logging (this library uses the standard library logging module)
 logging.basicConfig(
     format="{asctime} - {levelname} - {name}.{funcName}: {message}",
     style="{",
@@ -122,20 +125,22 @@ logging.basicConfig(
     force=True,
 )
 
+# check the household data for plausebility
 samsmart.check_households(samsmart.HOUSEHOLDS)
 
-# Create a session object to reduce load (reuse open http connection).
+# create a session object to reduce load (reuse open http connection)
 session = requests.Session()
 tfbs = samsmart.timeframes_by_source(samsmart.HOUSEHOLDS)
 
+# collect all sensor data of "koffer1"
 dfs = []
 for tf in tfbs["koffer1"]:  # it may also be "koffer2"
     dfs.append(samsmart.all_timeframe_records(tf, session))
 
 koffer1_records = pd.concat(dfs)
 
+# downsample nominal and cardinal data separately
 (nominals, cardinals) = samsmart.nominals_cardinals(koffer1_records)
-
 nominals = samsmart.downsample(
     nominals, timedelta="5min", aggregation_function=samsmart.not_nan_any
 )
@@ -143,7 +148,7 @@ cardinals = samsmart.downsample(
     cardinals, timedelta="5min", aggregation_function="mean"
 )
 
+# plot downsampled and normalized cardinal data
 fig = samsmart.scatter_plot(samsmart.normalize(cardinals))
-
 fig.show()
 ```
