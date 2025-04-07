@@ -24,7 +24,7 @@ from .etl import (
     past_timedelta,
     timeframes_by_source,
 )
-from .plotting import data_availability, line_plot, scatter_plot
+from .plotting import line_plot, plot_isna, scatter_plot
 
 __all__ = [
     "absolute_humidity",
@@ -35,7 +35,6 @@ __all__ = [
     "check_households",
     "column_sum",
     "config",
-    "data_availability",
     "downsample",
     "historical",
     "HOUSEHOLDS",
@@ -49,6 +48,7 @@ __all__ = [
     "not_nan_any",
     "outer_join_by_timestamp",
     "past_timedelta",
+    "plot_isna",
     "remove_outliers",
     "scatter_plot",
     "smoothed_average",
